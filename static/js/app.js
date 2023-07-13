@@ -1,189 +1,230 @@
-// Place url in a constant variable
-const url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json"
 
-// Fetch the JSON data and console log it
-d3.json(url).then(function(data) {
-  console.log(data);
-});
+// URL of the JSON file
+        var url = 'https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json';
 
-// Initialize the dashboard at start up 
-function init() {
-
-    // Use D3 to select the dropdown menu
-    let dropdownMenu = d3.select("#selDataset");
-
-    // Use D3 to get sample names and populate the drop-down selector
-    d3.json(url).then((data) => {
-        
-        // Set a variable for the sample names
-        let names = data.names;
-
-        // Add  samples to dropdown menu
-        names.forEach((id) => {
-
-            // Log the value of id for each iteration of the loop
-            console.log(id);
-
-            dropdownMenu.append("option")
-            .text(id)
-            .property("value",id);
+        // Use d3.json() to read the JSON file
+        d3.json(url).then(function(data) {console.log(data);
+      
         });
 
-        // Set the first sample from the list
-        let sample_one = names[0];
+//         // Function to create the bar chart
+//         function createBarChart(selectedData) {
+//             // Use d3.json() to read the JSON file
+//             d3.json(url).then(function(data) {
+// //                 Retrieve all the data
+//                 var otuData = data.samples;
 
-        // Log the value of sample_one
-        console.log(sample_one);
+//                 // Sort the data by sample_values in descending order
+//                 var sortedData = otuData.sort((a, b) => b.sample_values - a.sample_values);
 
-        // Build the initial plots
-        buildMetadata(sample_one);
-        buildBarChart(sample_one);
-        buildBubbleChart(sample_one);
-        buildGaugeChart(sample_one);
+//                 // Select the top 10 OTUs
+//                 var selectedValues = sortedData.map(item => item.sample_values).slice(0, selectedData);
+//                 var selectedIds = sortedData.map(item => `OTU ${item.otu_ids}`).slice(0, selectedData);
+//                 var selectedLabels = sortedData.map(item => item.otu_labels).slice(0, selectedData);
 
-    });
-};
+//                 var trace = {
+//                     x: selectedValues,
+//                     y: selectedIds,
+//                     text: selectedLabels,
+//                     type: 'bar',
+//                     orientation: 'h',
+//                     hovertemplate: '%{text}<extra></extra>'
+//                 };
 
-// Function that populates metadata info
-function buildMetadata(sample) {
+//                 var layout = {
+//                     title: `Top ${selectedData} OTUs`,
+//                     xaxis: { title: 'Sample Values' },
+//                     yaxis: { title: 'OTU IDs' }
+//                 };
 
-    // Use D3 to retrieve all of the data
-    d3.json(url).then((data) => {
+//                 var chartData = [trace];
+//                 Plotly.newPlot('bar', chartData, layout);
+//             }).catch(function(error) {
+//                 console.error('Error loading the JSON file:', error);
+//             });
+//         }
 
-        // Retrieve all metadata
-        let metadata = data.metadata;
+//         // Dropdown menu
+//         var dropdown = document.getElementById('dropdown');
+//         dropdown.addEventListener('change', function() {
+//             var selectedData = parseInt(this.value);
+//             createBarChart(selectedData);
+//         });
 
-        // Filter based on the value of the sample
-        let value = metadata.filter(result => result.id == sample);
+//         // Populate dropdown options
+//         for (var i = 1; i <= 10; i++) {
+//             var option = document.createElement('option');
+//             option.value = i;
+//             option.text = i;
+//             dropdown.appendChild(option);
+//         }
 
-        // Log the array of metadata objects after the have been filtered
-        console.log(value)
+//         // Initial chart with default selection
+//         createBarChart(5);
 
-        // Get the first index from the array
-        let valueData = value[0];
+// // Function to update the plots and display metadata
+//         function updatePlots(selectedSample) {
+//             // Use d3.json() to read the JSON file
+//             d3.json(url).then(function(data) {
+//                 var sampleData = data.samples.find(sample => sample.id === selectedSample);
+//                 var metadata = data.metadata.find(sample => sample.id === selectedSample);
 
-        // Clear out metadata
-        d3.select("#sample-metadata").html("");
+//                 var trace = {
+//                     x: sampleData.otu_ids,
+//                     y: sampleData.sample_values,
+//                     text: sampleData.otu_labels,
+//                     mode: 'markers',
+//                     marker: {
+//                         size: sampleData.sample_values,
+//                         color: sampleData.otu_ids,
+//                         colorscale: 'Viridis'
+//                     }
+//                 };
 
-        // Use Object.entries to add each key/value pair to the panel
-        Object.entries(valueData).forEach(([key,value]) => {
+//                 var layout = {
+//                     title: 'Bubble Chart',
+//                     xaxis: { title: 'OTU IDs' },
+//                     yaxis: { title: 'Sample Values' }
+//                 };
 
-            // Log the individual key/value pairs as they are being appended to the metadata panel
-            console.log(key,value);
+//                 var chartData = [trace];
+//                 Plotly.newPlot('bubble', chartData, layout);
 
-            d3.select("#sample-metadata").append("h5").text(`${key}: ${value}`);
-        });
-    });
+//                 // Display metadata
+//                 var metadataContainer = document.getElementById('metadata');
+//                 metadataContainer.innerHTML = ''; // Clear existing content
 
-};
+//                 for (var key in metadata) {
+//                     var value = metadata[key];
+//                     var metadataItem = document.createElement('p');
+//                     metadataItem.textContent = key + ': ' + value;
+//                     metadataContainer.appendChild(metadataItem);
+//                 }
+//             }).catch(function(error) {
+//                 console.error('Error loading the JSON file:', error);
+//             });
+//         }
 
-// Function that builds the bar chart
-function buildBarChart(sample) {
+//         // Dropdown menu
+//         var dropdown = document.getElementById('dropdown');
+//         dropdown.addEventListener('change', function() {
+//             var selectedSample = parseInt(this.value);
+//             updatePlots(selectedSample);
+//         });
 
-    // Use D3 to retrieve all of the data
-    d3.json(url).then((data) => {
+//         // Use d3.json() to read the JSON file and populate the dropdown menu
+//         d3.json(url).then(function(data) {
+//             var samples = data.samples;
+//             samples.forEach(function(sample) {
+//                 var option = document.createElement('option');
+//                 option.value = sample.id;
+//                 option.text = sample.id;
+//                 dropdown.appendChild(option);
+//             });
+//         }).catch(function(error) {
+//             console.error('Error loading the JSON file:', error);
+//         });
 
-        // Retrieve all sample data
-        let sampleInfo = data.samples;
+//         // Initial plots with default selection
+//         updatePlots(940);
 
-        // Filter based on the value of the sample
-        let value = sampleInfo.filter(result => result.id == sample);
 
-        // Get the first index from the array
-        let valueData = value[0];
 
-        // Get the otu_ids, lables, and sample values
-        let otu_ids = valueData.otu_ids;
-        let otu_labels = valueData.otu_labels;
-        let sample_values = valueData.sample_values;
+// // Function to create the bubble chart
+//         function createBubbleChart() {
+//             // Use d3.json() to read the JSON file
+//             d3.json(url).then(function(data) {
+//                 var otuData = data.samples[0]; // Assuming the first sample
 
-        // Log the data to the console
-        console.log(otu_ids,otu_labels,sample_values);
+//                 var trace = {
+//                     x: otuData.otu_ids,
+//                     y: otuData.sample_values,
+//                     text: otuData.otu_labels,
+//                     mode: 'markers',
+//                     marker: {
+//                         size: otuData.sample_values,
+//                         color: otuData.otu_ids,
+//                         colorscale: 'Viridis'
+//                     }
+//                 };
 
-        // Set top ten items to display in descending order
-        let yticks = otu_ids.slice(0,10).map(id => `OTU ${id}`).reverse();
-        let xticks = sample_values.slice(0,10).reverse();
-        let labels = otu_labels.slice(0,10).reverse();
-        
-        // Set up the trace for the bar chart
-        let trace = {
-            x: xticks,
-            y: yticks,
-            text: labels,
-            type: "bar",
-            orientation: "h"
-        };
+//                 var layout = {
+//                     title: 'Bubble Chart',
+//                     xaxis: { title: 'OTU IDs' },
+//                     yaxis: { title: 'Sample Values' }
+//                 };
 
-        // Setup the layout
-        let layout = {
-            title: "Top 10 OTUs Present"
-        };
+//                 var chartData = [trace];
+//                 Plotly.newPlot('bubble', chartData, layout);
+//             }).catch(function(error) {
+//                 console.error('Error loading the JSON file:', error);
+//             });
+//         }
 
-        // Call Plotly to plot the bar chart
-        Plotly.newPlot("bar", [trace], layout)
-    });
-};
+//         // Create the bubble chart
+//         createBubbleChart();
 
-// Function that builds the bubble chart
-function buildBubbleChart(sample) {
 
-    // Use D3 to retrieve all of the data
-    d3.json(url).then((data) => {
-        
-        // Retrieve all sample data
-        let sampleInfo = data.samples;
 
-        // Filter based on the value of the sample
-        let value = sampleInfo.filter(result => result.id == sample);
+// Function to create the charts
+function createCharts(sample) {
+  // Use d3.json() to read the JSON file
+  d3.json(url).then(function(data) {
+    // Retrieve all the data
+    var otuData = data.samples;
 
-        // Get the first index from the array
-        let valueData = value[0];
+    // Filter the data for the selected sample
+    var selectedSampleData = otuData.filter(function(sampleData) {
+      return sampleData.id === sample;
+    })[0];
 
-        // Get the otu_ids, lables, and sample values
-        let otu_ids = valueData.otu_ids;
-        let otu_labels = valueData.otu_labels;
-        let sample_values = valueData.sample_values;
+    // Get the top 10 OTUs for the selected sample
+    var top10OTUs = selectedSampleData.otu_ids.slice(0, 10).reverse();
+    var top10OTUValues = selectedSampleData.sample_values.slice(0, 10).reverse();
+    var top10OTULabels = selectedSampleData.otu_labels.slice(0, 10).reverse();
 
-        // Log the data to the console
-        console.log(otu_ids,otu_labels,sample_values);
-        
-        // Set up the trace for bubble chart
-        let trace1 = {
-            x: otu_ids,
-            y: sample_values,
-            text: otu_labels,
-            mode: "markers",
-            marker: {
-                size: sample_values,
-                color: otu_ids,
-                colorscale: "Earth"
-            }
-        };
+    // Create the bar chart
+    var barTrace = {
+      x: top10OTUValues,
+      y: top10OTUs.map(function(otuID) {
+        return `OTU ${otuID}`;
+      }),
+      text: top10OTULabels,
+      type: 'bar',
+      orientation: 'h'
+    };
+    var barData = [barTrace];
+    var barLayout = {
+      title: 'Top 10 OTUs',
+      xaxis: { title: 'Sample Values' },
+      yaxis: { title: 'OTU ID' }
+    };
+    Plotly.newPlot('bar', barData, barLayout);
 
-        // Set up the layout
-        let layout = {
-            title: "Bacteria Per Sample",
-            hovermode: "closest",
-            xaxis: {title: "OTU ID"},
-        };
+    // Create the bubble chart
+    var bubbleTrace = {
+      x: selectedSampleData.otu_ids,
+      y: selectedSampleData.sample_values,
+      text: selectedSampleData.otu_labels,
+      mode: 'markers',
+      marker: {
+        size: selectedSampleData.sample_values,
+        color: selectedSampleData.otu_ids,
+        colorscale: 'Earth'
+      }
+    };
+    var bubbleData = [bubbleTrace];
+    var bubbleLayout = {
+      title: 'OTU IDs vs Sample Values',
+      xaxis: { title: 'OTU ID' },
+      yaxis: { title: 'Sample Values' }
+    };
+    Plotly.newPlot('bubble', bubbleData, bubbleLayout);
+  }).catch(function(error) {
+    // Handle any errors that occur during loading
+    console.error('Error loading the JSON file:', error);
+  });
+}
 
-        // Call Plotly to plot the bubble chart
-        Plotly.newPlot("bubble", [trace1], layout)
-    });
-};
-
-// Function that updates dashboard when sample is changed
-function optionChanged(value) { 
-
-    // Log the new value
-    console.log(value); 
-
-    // Call all functions 
-    buildMetadata(value);
-    buildBarChart(value);
-    buildBubbleChart(value);
-    buildGaugeChart(value);
-};
-
-// Call the initialize function
-init();
+// Call the createCharts function with a sample ID
+createCharts('sample1');
