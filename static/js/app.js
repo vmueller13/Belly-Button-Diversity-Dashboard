@@ -35,13 +35,13 @@ function init() {
 
     // Build the initial plots
     buildMetadata(sample_one);
-    buildCharts(sample_one);
+    createCharts(sample_one);
     buildGaugeChart(sample_one);
   });
 }
 
 // Function to create the charts
-function buildCharts(sample) {
+function createCharts(sample) {
   // Use d3.json() to read the JSON file
   d3.json(url).then(function(data) {
     // Retrieve all the data
@@ -99,9 +99,6 @@ function buildCharts(sample) {
   });
 }
 
-// // Call the createCharts function with a sample ID
-// createCharts('sample_one');
-
 // Function that populates metadata info
 function buildMetadata(sample) {
 
@@ -135,8 +132,9 @@ function buildMetadata(sample) {
 
 };
 
-
-
+function buildGuage(sample) {
+  
+}
 // Function that updates dashboard when sample is changed
 function optionChanged(selectedSampleData) { 
 
@@ -145,8 +143,7 @@ function optionChanged(selectedSampleData) {
 
   // Call all functions 
   buildMetadata(selectedSampleData);
-  buildBarChart(selectedSampleData);
-  buildBubbleChart(selectedSampleData);
+  createCharts(selectedSampleData);
   buildGaugeChart(selectedSampleData);
 };
 
