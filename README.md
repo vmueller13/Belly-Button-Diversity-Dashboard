@@ -1,2 +1,3 @@
 # Module 14 Challenge: Belly Button Diversity
-Module 14 Challenge
+
+My static site is deployed at: https://vmueller13.github.io/belly-button-challenge/
