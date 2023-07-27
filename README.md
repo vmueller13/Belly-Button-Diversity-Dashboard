@@ -15,14 +15,14 @@ This is the first function in the app.js file because it will initialize the das
 *function createCharts(sample)*
 This function first sets up the `selectedSampleData` so that the top 10 OTUs can be called for each test subject. Once this data has been called, the bar chart and the bubble chart are created and plotted using `Plotly.newPlot`.
 
-![Bubble Chart](Images/Bubble Chart.png)
+![Bubble Chart](Images/BubbleChart.png)
 
 *function buildMetadata(sample)*
 This function uses `d3.json` to pull in the data in an array and set the first value always at the first index from the array, this way the dashboard will never be empty and there will always be something displayed.
 
 *function optionChanged*
 This is the final function in the project that updates the dashboard when a Test Subject ID is changed.
-![optionChanged and Bar Chart](../Images/Top 10 OTUs.png)
+![optionChanged and Bar Chart](Images/Top_10_OTUs.png)
 
 <ins>Challenges</ins>
 My biggest challenge in completing this project was to have the bar chart and the bubble chart show up on the dashboard. After talkign with TA, Taylor Grafft, and fellow student Kimberly Reitema, I was able to figure out that the names of the functions were already set up in the index.html file and that I needed to name the functions correctly in order for the visualizations to display correctly.
