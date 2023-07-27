@@ -8,6 +8,7 @@ This project explored the Belly Button Diversity dataset found at http://robdunn
 I was able to add the cool background picture from https://img.freepik.com! I added in my own styles.css file into the index file as a new stylesheet.
 
 <ins>Processes and Technologies</ins>
+
 To create this dashboard, I first loaded in the URL of the JSON file using `d3.json()` and logged the data onto the console. Next, I created four different functions: `init`, `createCharts`, `buildMetadata`, and `optionChanged`. Each of these functions were called in the index file, so when the functions were correct, the dashboard was able to update.
 
 *function init()*
@@ -26,4 +27,5 @@ This is the final function in the project that updates the dashboard when a Test
 ![optionChanged and Bar Chart](Images/Top_10_OTUs.png)
 
 <ins>Challenges</ins>
+
 My biggest challenge in completing this project was to have the bar chart and the bubble chart show up on the dashboard. After talkign with TA, Taylor Grafft, and fellow student Kimberly Reitema, I was able to figure out that the names of the functions were already set up in the index.html file and that I needed to name the functions correctly in order for the visualizations to display correctly.
