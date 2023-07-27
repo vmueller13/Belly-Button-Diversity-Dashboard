@@ -14,7 +14,8 @@ This is the first function in the app.js file because it will initialize the das
 
 *function createCharts(sample)*
 This function first sets up the `selectedSampleData` so that the top 10 OTUs can be called for each test subject. Once this data has been called, the bar chart and the bubble chart are created and plotted using `Plotly.newPlot`.
-![Bubble Chart](../Images/Bubble Chart.png)
+
+![Bubble Chart](Images/Bubble Chart.png)
 
 *function buildMetadata(sample)*
 This function uses `d3.json` to pull in the data in an array and set the first value always at the first index from the array, this way the dashboard will never be empty and there will always be something displayed.
