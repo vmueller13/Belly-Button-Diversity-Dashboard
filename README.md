@@ -3,6 +3,7 @@
 My static site is deployed at: https://vmueller13.github.io/belly-button-challenge/
 
 <ins>Project Overview</ins>
+
 This project explored the Belly Button Diversity dataset found at http://robdunnlab.com/projects/belly-button-biodiversity/. This dataset catalogs the microbes that colonize human navels. Furthermore, the dataset reveals that a micobial species, also called operational taxonomic units, or OTUs, were present in more that 70% of people while the rest species were relatively rare. My dashboard visualizations display the top ten OTUs for each test subject as well as the OTU IDs versus the Sample Values.
 I was able to add the cool background picture from https://img.freepik.com! I added in my own styles.css file into the index file as a new stylesheet.
 
